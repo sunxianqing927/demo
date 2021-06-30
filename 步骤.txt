@@ -1,0 +1,49 @@
+1.创建ATL工程
+2.添加ATLSimpleObject 关键是plugID 要唯一
+3.VS class view 找到刚刚添加的对象，右键添加(Implement Interface)
+4.implement inface from：Registry ->Microsoft Add-In Designer <1.0> ->_IDTExtensbility2
+	注意接口类型，这是个古老的技术，最新编译器可能会产生错误的函数接口声明导致编译失败，原因是接口不匹配，无法实例化抽象类
+	STDMETHOD(OnConnection)(LPDISPATCH Application, ext_ConnectMode ConnectMode, LPDISPATCH AddInInst, SAFEARRAY * * custom)
+	STDMETHOD(OnDisconnection)(ext_DisconnectMode RemoveMode, SAFEARRAY * * custom)
+	STDMETHOD(OnAddInsUpdate)(SAFEARRAY * * custom)
+	STDMETHOD(OnStartupComplete)(SAFEARRAY * * custom)
+	STDMETHOD(OnBeginShutdown)(SAFEARRAY * * custom)
+
+5.implement inface from：Registry ->Microsoft Office 12.0 Object Library<2.4> ->IRibbonExtensibility
+	修改导出配置 #import "C:\Program Files (x86)\Common Files\Microsoft Shared\OFFICE12\MSO.DLL"      raw_interfaces_only, raw_native_types, no_namespace, named_guids, auto_search, exclude( "IAccessible"),exclude("DocumentProperties" )
+           
+
+6.在ALT 对象的注册文件中添加注册表 ATLSimpleObject.rgs  ,注册表“HKEY_CURRENT_USER\Software\Microsoft\Office\Word\Addins”键值下是否含有相应内容
+基本完成
+HKCU
+{
+    NoRemove Software
+    {
+        NoRemove Microsoft
+        {
+            NoRemove Office
+            {
+                NoRemove Excel
+                {
+                    NoRemove Addins
+                    {
+                        ATLAddin.MSConnect
+                        {
+                            val Description = s 'ATLAddin Addin'
+                            val FriendlyName = s 'ATLAddin Addin'
+                            val LoadBehavior = d 3
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+7.在class view 的接口中通过工具添加接口,比如：onload,
+    	记得将这个宏设置成当前的ATL对象的接口，COM_INTERFACE_ENTRY2(IDispatch, IATLSimpleObject)
+
+
+//————————————————
+//版权声明：本文为CSDN博主「北塔」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+//原文链接：https://blog.csdn.net/northtower/article/details/41316687
