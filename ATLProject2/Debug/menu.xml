@@ -1,0 +1,17 @@
+<customUI onLoad="OnLoad" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+ <ribbon>
+   <tabs>
+    <tab id="CustomTab" label="ExcelAddInDemo">
+     <group id="button0" label="²âÊÔ×é">
+       <button id="button01" label="²âÊÔ1" getVisible="GetVisible" onAction="OnStart"/>
+       <button id="button02" label="²âÊÔ2" getVisible="GetVisible" onAction="OnStart"/>
+       <button id="button03" label="²âÊÔ3" onAction="OnStart"/>
+     </group>
+     <group id="button1" label="²âÊÔ×é">
+       <button id="button12" label="²âÊÔ1" onAction="OnStart" image="212" getEnabled="GetEnabled"/>
+       <button id="button13" label="²âÊÔ2" onAction="OnStart" image="212"/>
+     </group>
+    </tab>
+   </tabs>
+ </ribbon>
+</customUI>

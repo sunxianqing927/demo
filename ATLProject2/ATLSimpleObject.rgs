@@ -1,0 +1,50 @@
+HKCR
+{
+	ATLSimpleObject.ExcelAddIn.1 = s 'ATLSimpleObject class'
+	{
+		CLSID = s '{8cb3ed76-4a3e-40c9-a375-dc3affecdb47}'
+	}
+	ATLSimpleObject.ExcelAddIn = s 'ATLSimpleObject class'
+	{		
+		CurVer = s 'ATLSimpleObject.ExcelAddIn.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8cb3ed76-4a3e-40c9-a375-dc3affecdb47} = s 'ATLSimpleObject class'
+		{
+			ProgID = s 'ATLSimpleObject.ExcelAddIn.1'
+			VersionIndependentProgID = s 'ATLSimpleObject.ExcelAddIn'
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{266a7ba0-7a0f-4afb-b4a0-8d05a89a9d75}'
+			Version = s '1.0'
+		}
+	}
+}
+HKCU
+{
+    NoRemove Software
+    {
+        NoRemove Microsoft
+        {
+            NoRemove Office
+            {
+                NoRemove Excel
+                {
+                    NoRemove Addins
+                    {
+                        ATLSimpleObject.ExcelAddIn
+                        {
+                            val Description = s 'ATLAddin Addin'
+                            val FriendlyName = s 'ATLAddin Addin'
+                            val LoadBehavior = d 3
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

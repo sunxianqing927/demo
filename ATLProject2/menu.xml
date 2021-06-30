@@ -1,0 +1,50 @@
+<customUI onLoad="OnLoad" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+ <ribbon>
+   <tabs>
+    <tab id="CustomTab" label="m123">
+     <group id="F0000" label="系统">
+       <button id="F0001" label="登录" getVisible="GetVisible" onAction="OnStart"/>
+       <button id="F0002" label="登出" getVisible="GetVisible" onAction="OnStart"/>
+       <button id="F0003" label="关于" onAction="OnStart"/>
+     </group>
+     <group id="F0500" label="设置">
+       <!-- <button id="F0501" label="系统设置" onAction="OnStart" image="211"/> -->
+       <button id="F0502" label="债券设置" onAction="OnStart" image="212" getEnabled="GetEnabled"/>
+       <button id="F0503" label="服务状态" onAction="OnStart" image="212"/>
+     </group>
+     <group id="F1000" label="现券买卖" getVisible="GetVisible">
+       <button id="F1001" label="行情报价" onAction="OnStart" image="213"/>
+       <button id="F1002" label="市场成交" onAction="OnStart" image="214"/>
+       <button id="F1004" label="做市报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F1005" label="匿名报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F1006" label="对话报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F1007" label="请求报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>    
+       <button id="F1003" label="指示报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>    
+       <button id="F1008" label="我的报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F1009" label="设置" onAction="OnStart" image="211" getEnabled="GetEnabled"/>
+     </group>
+     <group id="F2000" label="利率互换" getVisible="GetVisible">
+       <button id="F2001" label="行情报价" onAction="OnStart" image="213"/>
+       <button id="F2002" label="市场成交" onAction="OnStart" image="214"/>
+       <button id="F2004" label="批量报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F2005" label="我的报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F2006" label="设置" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+     </group>
+      <group id="F7000" label="质押式正回购" getVisible="GetVisible">
+       <button id="F7003" label="新增报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F7004" label="我的报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+     </group>
+      <group id="F7100" label="质押式逆回购" getVisible="GetVisible">
+       <button id="F7101" label="提交询价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F7102" label="询价列表" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F7103" label="我的报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+       <button id="F7104" label="新增报价" onAction="OnStart" image="213" getEnabled="GetEnabled"/>
+     </group>
+     <group id="F4000" label="数据">
+       <button id="F4002" label="信息维护" onAction="OnStart"/>
+       <button id="F4003" label="成交查询" onAction="OnStart"/>
+     </group>
+    </tab>
+   </tabs>
+ </ribbon>
+</customUI>

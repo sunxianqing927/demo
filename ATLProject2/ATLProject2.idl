@@ -1,0 +1,40 @@
+// ATLProject2.idl : IDL source for ATLProject2
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ATLProject2.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(f2772e15-32b0-4e99-a028-1e0a6441f355),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IATLSimpleObject : IDispatch
+{
+	[id(1)] HRESULT OnStart([in] IDispatch* RibbonControl);
+	[id(2)] HRESULT GetVisible([in] IDispatch* GetVisible, [out, retval] VARIANT_BOOL* pvarReturnedVal);
+	[id(3)] HRESULT OnLoad([in] IDispatch* RibbonControl);
+	[id(4)] HRESULT GetEnabled([in] IDispatch* RibbonControl, [out, retval] VARIANT_BOOL* pvarReturnedVal);
+};
+[
+	uuid(266a7ba0-7a0f-4afb-b4a0-8d05a89a9d75),
+	version(1.0),
+]
+library ATLProject2Lib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(8cb3ed76-4a3e-40c9-a375-dc3affecdb47)
+	]
+	coclass ATLSimpleObject
+	{
+		[default] interface IATLSimpleObject;
+	};
+};
+
+import "shobjidl.idl";
