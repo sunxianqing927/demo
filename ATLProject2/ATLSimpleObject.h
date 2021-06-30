@@ -87,6 +87,8 @@ public:
 		 return S_OK;
 	}
 
+private:
+	IRibbonUI* m_IRibbonUI = nullptr;
 
 // IRibbonExtensibility Methods
 public:
@@ -110,7 +112,7 @@ public:
 		return (*GetCustomUI ? S_OK : E_OUTOFMEMORY);
 	}
 	STDMETHOD(OnStart)(IDispatch* RibbonControl);
-	STDMETHOD(GetVisible)(IDispatch* GetVisible, VARIANT_BOOL* pvarReturnedVal);
+	STDMETHOD(GetVisible)(IDispatch* RibbonControl, VARIANT_BOOL* pvarReturnedVal);
 	STDMETHOD(OnLoad)(IDispatch* RibbonControl);
 	STDMETHOD(GetEnabled)(IDispatch* RibbonControl, VARIANT_BOOL* pvarReturnedVal);
 };

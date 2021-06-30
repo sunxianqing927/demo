@@ -17,7 +17,7 @@ import "ocidl.idl";
 interface IATLSimpleObject : IDispatch
 {
 	[id(1)] HRESULT OnStart([in] IDispatch* RibbonControl);
-	[id(2)] HRESULT GetVisible([in] IDispatch* GetVisible, [out, retval] VARIANT_BOOL* pvarReturnedVal);
+	[id(2)] HRESULT GetVisible([in] IDispatch* RibbonControl, [out, retval] VARIANT_BOOL* pvarReturnedVal);
 	[id(3)] HRESULT OnLoad([in] IDispatch* RibbonControl);
 	[id(4)] HRESULT GetEnabled([in] IDispatch* RibbonControl, [out, retval] VARIANT_BOOL* pvarReturnedVal);
 };
