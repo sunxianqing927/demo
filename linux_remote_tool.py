@@ -36,7 +36,7 @@ class Sftp:
             print('sftp state error, %s %s to %s fail '%(gp, from_file,to_file))
             return False
         try:
-            self.sftp.get(from_file, to_file) if gp == "get" else  sftp.put(from_file, to_file)
+            self.sftp.get(from_file, to_file) if gp == "get" else  self.sftp.put(from_file, to_file)
             print('sftp:  %s %s to %s  success'%(gp, from_file,to_file))
             return True
         except Exception as e:
