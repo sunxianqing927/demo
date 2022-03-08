@@ -1,0 +1,10 @@
+tensorflow:Final best valid   0 loss=0.20478513836860657 norm_loss=0.767241849151384 roc=0.8262403011322021 pr=0.39401692152023315 calibration=0.9863265752792358 rate=0.0
+提取 calibration=0.9863265752792358 .
+# 匹配“calibration=”后面的数字
+pattern = re.compile(r'(?<=calibration=)\d+\.?\d*')
+pattern.findall(string)
+# ['0.9863265752792358']
+
+pattern = re.compile(r'(?:loss=)\d+\.?\d*')
+pattern.findall(string)
+# ['loss=0.20478513836860657', 'loss=0.767241849151384']
