@@ -8,3 +8,6 @@ pattern.findall(string)
 pattern = re.compile(r'(?:loss=)\d+\.?\d*')
 pattern.findall(string)
 # ['loss=0.20478513836860657', 'loss=0.767241849151384']
+
+
+pip install -i http://mirrors.aliyun.com/pypi/simple  --trusted-host mirrors.aliyun.com paramiko
