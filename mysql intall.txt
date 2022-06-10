@@ -1,163 +1,66 @@
-firewall-cmd --zone=public --add-port=3306/tcp --permanent
-1、查看firewalld服务状态
+0. 官网下载MySQL mysql.rpm-bundle.tar的安装包
+或者拿到官网下载包的下载地址
+ wget https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-5.7.38-1.el7.x86_64.rpm-bundle.tar  //去官网找到MySQL  rpm-bundle.tar 的下载包地址
 
-systemctl status firewalld
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+1.卸载以前安装过的mysql文件
+ rpm -qa | grep -i mysql
+ rpm -e --nodeps mysql-libs-5.1.71-1.el6.x86_64
+ 
+ 查看系统自带的Mariadb
+ rpm -qa|grep mariadb
+ rpm -e --nodeps mariadb-libs-5.5.60-1.el7-5.x86_64
+ 
+ 删除etc目录下的my.cnf
+ rm /etc/my.cnf
+ 
+ find / -name mysql //删除MySQL 相关文件目录
 
-出现 Active: active (running)高亮显示则表示是启动状态。
+2.上传并解压文件
+ tar -xvf mysql-5.7.25-1.el6.x86_64.rpm-bundle.tar
 
-出现 Active: inactive (dead)灰色表示停止，看单词也行。
+3.安装对应的包（必须按照顺序）
+ rpm -ivh mysql-community-common-5.7.25-1.el6.x86_64.rpm 
+ rpm -ivh mysql-community-libs-5.7.25-1.el6.x86_64.rpm 
+ rpm -ivh mysql-community-devel-5.7.25-1.el6.x86_64.rpm 
+ rpm -ivh mysql-community-client-5.7.25-1.el6.x86_64.rpm 
+ rpm -ivh mysql-community-server-5.7.25-1.el6.x86_64.rpm 
+ // yum install perl-JSON  可能需要安装
+ // rpm -ivh *.rpm        这种方式也可以
+ 
+4.启动mysql
+ service mysqld start（第一次可能会失败，再试一次即可）
 
-2、查看firewalld的状态
+5.获取mysql初始化密码
+ grep 'temporary password' /var/log/mysqld.log
 
-firewall-cmd --state
+6.修改mysql密码
+ mysqladmin -u root -p password
 
-3、开启、重启、关闭firewalld.service服务
+7.数据库查看编码
+ mysql>SHOW VARIABLES LIKE '%char%';
+ 发现字符编码有latin1
 
-1)开启
+8.修改/etc/my.cnf (默认在这个目录)
+ [client]
+ default-character-set=utf8
+ [mysqld]
+ character-set-server=utf8
 
-service firewalld start
+9.重启mysql
+ service mysqld restart
+ mysql>SHOW VARIABLES LIKE '%char%';//检查修改
 
-2)重启
+10,最后，创建用户赋予任何主机访问数据的权限
+  mysql> set global validate_password_policy=0;
+  mysql> set global validate_password_length=4;
 
-service firewalld restart
+ mysql> GRANT ALL PRIVILEGES ON *.* TO 'sunny'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+ mysql>  Flush privileges;
 
-3)关闭
-
-service firewalld stop
-
-4、查看防火墙规则
-
-firewall-cmd --list-all
-
-5、查询、开放、关闭端口
-
-1)查询端口是否开放
-
-firewall-cmd --query-port=8080/tcp
-
-2)开放80端口
-
-firewall-cmd --permanent --add-port=80/tcp
-
-3)移除端口
-
-firewall-cmd --permanent --remove-port=8080/tcp
-
-4)重启防火墙(修改配置后要重启防火墙)
-
+11.开放端口
+firewall-cmd --zone=public --add-port=3306/tcp --permanent --reload
 firewall-cmd --reload
 
-6、参数解释
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-1)firwall-cmd：是Linux提供的操作firewall的一个工具;
-
-2)--permanent：表示设置为持久;
-
-3)--add-port：标识添加的端口;
-
-7、拒绝所有包
-
-firewall-cmd --panic-on
-
-8、取消拒绝状态
-
-firewall-cmd --panic-off
-
-9、查看是否拒绝
-
-firewall-cmd --query-panic
-
-10、将接口添加到区域(默认接口都在public)
-
-firewall-cmd --zone=public --add-interface=eth0(永久生效再加上 --permanent 然后reload防火墙)
-
-
-rpm -qa | grep -i mysql
-find / -name mysql
-wget http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
-ll
-rm -rf *
-wget http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
-ll
-rpm -ivh mysql80-community-release-el7-5.noarch.rpm
-yum update
-ll
-rpm -ivh mysql80-community-release-el7-5.noarch.rpm
-yum update
-yum install mysql-community-server
-systemctl list-unit-files|grep mysqld
-systemctl enable mysqld.service
-ps -ef|grep mysql # 查看是否启动MySQL服务
-systemctl start mysqld.service # 启动服务
-systemctl enable mysqld.service
-systemctl start mysqld.service
-ps -ef|grep mysql # 查看是否启动MySQL服务
-systemctl start mysqld.service # 启动服务
-mysqld --initialize
-grep "password" /var/log/mysqld.log
-mysql -u root -p
-
-
-
-
-
-一、rpm包
-
-1、wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm（下载rpm）
-
-2、rpm -ivh mysql-community-release-el7-5.noarch.rpm（安装rpm包）
-
-3、yum install mysql-server  （安装）
-
-二、操作MySQL
-
-1、service mysql start(启动数据库)
-
-2、service mysql status（查看数据库状态）
-
-3、mysql -u root -p（登录数据库）
-
-4、#vim /etc/my.cnf
-
-增加 skip-name-resolve 和skip-grant-tables
-[mysqld] 
-
-skip-name-resolve
-skip-grant-tables
-                         
-~                                 
-
-5、GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
-
-或者 
-
-update user set password=password(“新密码”) where user=”用户名”;
-
-      flush privileges;     （赋值权限）
-
-6、exit
-
-三、Linux防火墙
-
-1、systemctl status firewalld.service（查看防火墙状态）
-
-2、systemctl stop firewalld.service （关闭防火墙）
-
-注意点：
-
-centos7中防火墙的文件名有改变：
-
-1、firewalld的基本使用
-
-启动： systemctl start firewalld
-
-关闭： systemctl stop firewalld
-
-查看状态： systemctl status firewalld 
-
-开机禁用  ： systemctl disable firewalld
-
-开机启用  ： systemctl enable firewalld
-————————————————
-版权声明：本文为CSDN博主「红火吖」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/huangchonghai/article/details/122333686
