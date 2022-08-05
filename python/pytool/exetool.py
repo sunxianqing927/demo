@@ -19,25 +19,22 @@ def InitProject(cfgfile):
     remote_tool=RemoteToolMgr.CreateRemoteTool(root.get("ip"),22,root.get("username"),root.get("password"))
     exe=root.get("exe")
     shutil.rmtree(exe,ignore_errors=True)
-    os.makedirs(exe)
+    os.makedirs(exe, exist_ok=True)
     old_cwd=os.getcwd()
     os.chdir(exe)
+
     fix_dir=root.find("fix_dir")
     root_dir=fix_dir.get("root_dir")
     exe_dir=fix_dir.get("exe_dir")
-    os.makedirs(exe_dir)
+    os.makedirs(exe_dir, exist_ok=True)
     
     copys=root.find("copys")
     if copys:
         for copy in copys:
-           path_name=copy.get("src")
-           if os.path.isdir(copy.get("src")):
-               shutil.copytree(copy.get("src"),copy.get("des"))
-           else:
-               if not os.path.exists(os.path.dirname(copy.get("des"))):
-                   os.makedirs(os.path.dirname(copy.get("des")))
-               shutil.copyfile(copy.get("src"),copy.get("des"))
-
+            dirname=os.path.dirname(copy.get("des"))
+            if dirname and not os.path.exists(dirname):
+                os.makedirs(dirname)
+            remote_tool.TarSftpGetGZ(copy.get("src"),copy.get("des"))
     os.system("chmod +x "+exe_dir+"/"+exe)
     os.chdir(old_cwd)
     return root_dir,exe_dir,exe
@@ -93,7 +90,7 @@ def CopyRemoteToLocal(lib_dir,src_files):
         src_files=[src_files]
 
     old_cwd=os.getcwd()
-    os.makedirs(lib_dir)
+    os.makedirs(lib_dir, exist_ok=True)
     os.chdir(lib_dir)
 
     for src_file in src_files:
@@ -106,9 +103,7 @@ def CopyRemoteToLocal(lib_dir,src_files):
     os.chdir(old_cwd)
 
 def CreateBatchScript(src_dir,des_dir,server_root_dir,server_exe_dir,sever_name):
-    if os.path.exists(des_dir):
-        shutil.rmtree(des_dir)
-    os.mkdir(des_dir)
+    os.makedirs(des_dir, exist_ok=True)
     for root, dirs, file_names in os.walk(src_dir):
         for file_name in file_names:
             txt_data=open(root+"/"+file_name).read().replace(TEMPLATE_ROOT_DIR,server_root_dir).replace(TEMPLATE_EXE_DIR,server_root_dir+"/"+server_exe_dir).replace(TEMPLATE_NAME,sever_name)
@@ -117,8 +112,9 @@ def CreateBatchScript(src_dir,des_dir,server_root_dir,server_exe_dir,sever_name)
     os.system("chmod +x "+des_dir+"/*")
 
 if __name__ == "__main__":
+        
     os.chdir(os.path.abspath(os.path.dirname(sys.argv[0])))
-    cfg=sys.argv[1] if len(sys.argv)==2 else "exe"
+    cfg=sys.argv[1] if len(sys.argv)==2 else "exe.xml"
     root_dir,exe_dir,exe=InitProject(cfg)
     pid=GetPid(exe)
     if not pid:

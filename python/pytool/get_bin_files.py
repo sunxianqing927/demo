@@ -91,6 +91,16 @@ class RemoteToolMgr:
         RemoteToolMgr.usr_infos[ip]=UsrInfo(ip,port,usr,password)
         return RemoteToolMgr.GetDefaultUsr(ip)
 
+    def TarSftpGetGZ(self,src,des):
+        self.ssh_cmd.Exec_Commend( "cd "+os.path.dirname(src)+" && tar -czf "+ os.path.basename(src)+".tz " + os.path.basename(src))
+        self.sftp.SftpGet(src+".tz",des+".tz")
+        old_cwd=os.getcwd()
+        if os.path.dirname(des):
+            os.chdir(os.path.dirname(des))
+        os.system("tar -xzf " +os.path.basename(des) +".tz && rm -f "+os.path.basename(des)+".tz")
+        self.ssh_cmd.Exec_Commend( "rm -f " +src+".tz")
+        os.chdir(old_cwd)
+
     def GetDefaultUsr(usr_name):
         usr_info=RemoteToolMgr.usr_infos.get(usr_name)
         if not usr_info:
