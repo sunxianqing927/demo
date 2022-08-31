@@ -48,8 +48,6 @@ int main(int argc, const char* argv[])
         // Try each endpoint until we successfully establish a connection.
         tcp::socket socket(io_context);
        // boost::asio::connect(socket, endpoints);
-        auto endpoints = resolver.resolve("127.0.0.1", "80");
-
         socket.connect(tcp::endpoint(boost::asio::ip::address_v4::from_string("127.0.0.1"), 22222));
 
         // Form the request. We specify the "Connection: close" header so that the
