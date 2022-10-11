@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config exe="QueryServer" ip="192.168.222.222" username="root" password="123456" >
+	<fix_dir root_dir="~/simulatetrade"  exe_dir="QueryServer"/>
+	<copys>
+		<copy src="/home/sunny/.vs/simulatetrade/5e0353be-4a37-41f0-908d-929789c7996c/out/build/Linux-GCC-Release/QueryServer/Release/config" des="QueryServer/config"/>
+		<copy src="/home/sunny/.vs/simulatetrade/5e0353be-4a37-41f0-908d-929789c7996c/out/build/Linux-GCC-Release/QueryServer/Release/QueryServer" des="QueryServer/QueryServer"/>
+	</copys>
+</config>

@@ -11,7 +11,7 @@ if [ -n "$PID" ]; then
         echo "-----------------------[ info  ] this ${server_name} server is running, pid is ${PID} "
 else
         cd $server_path
-        nohup ./$server_name > /dev/null 2>&1 &
+        nohup ./$server_name config/config.xml> /dev/null 2>&1 &
 
         sleep 1
 

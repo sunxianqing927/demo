@@ -1,11 +1,9 @@
 import os
 
-src='/home/sunny/.vs/projectname/5e0353be-4a37-41f0-908d-929789c7996c/src'
-
 class SoLinkTool:
-    def __init__(self):
+    def __init__(self,src_dir):
         self.so_link_infos=[]
-        self.root=src #os.getcwd()
+        self.root=src_dir #os.getcwd()
     
     def GetSolinkCmd(self,path,file_name):
         file_path=path+'/'+file_name;
@@ -15,7 +13,9 @@ class SoLinkTool:
                 self.so_link_infos.append('cd %s && ln -fs %s %s && cd %s'%(path,link_file,file_name,self.root))
     
     def MakeSoLink(self):
-        for root, dirs, files in os.walk(src):
+        old_work=os.getcwd()
+        os.chdir(self.root)
+        for root, dirs, files in os.walk(self.root):
             for file_name in files:
                 self.GetSolinkCmd(root,file_name)
 
@@ -26,6 +26,9 @@ class SoLinkTool:
 
         cmd=cmd.rstrip(' && ')
         os.popen(cmd)
+        os.chdir(old_work)
 
-so_link_tool=SoLinkTool()
-so_link_tool.MakeSoLink()
+
+if __name__ == "__main__":
+    so_link_tool=SoLinkTool(src)
+    so_link_tool.MakeSoLink()

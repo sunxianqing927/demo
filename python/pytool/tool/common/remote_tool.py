@@ -1,10 +1,7 @@
 ﻿import paramiko
+import os
 import time
 
-src='/home/sunny/.vs/project/5e0353be-4a37-41f0-908d-929789c7996c/src'
-out='/home/sunny/.vs/project/5e0353be-4a37-41f0-908d-929789c7996c/out'
-project_name="exe"
-ipname="sunny"
 class UsrInfo:
     def __init__(self,ip,port,usr,password):
         self.ip=ip
@@ -82,26 +79,29 @@ class RemoteTool:
         self.sftp=sftp
         self.ssh_cmd=ssh_cmd
 
+    def TarSftpGetGZ(self,src,des_dir):
+        src_file=os.path.basename(src)
+        src_file_tz=src_file+str(time.time())+".tz"
+        self.ssh_cmd.Exec_Commend( "tar -czf %s -C %s %s"%(src_file_tz,os.path.dirname(src),src_file))
+        self.sftp.SftpGet(src_file_tz,src_file_tz)
+        self.ssh_cmd.Exec_Commend( "rm -f " +src_file_tz)
+
+        os.makedirs(des_dir,exist_ok=True)
+        os.system("tar -xzf %s -C %s && rm -f %s"%(src_file_tz,des_dir,src_file_tz))
+
 class RemoteToolMgr:
-    usr_infos=dict(default_name=UsrInfo('127.0.0.1',22,'root','123456'),
-                   sunny=UsrInfo('192.168.222.222',22,'sunny','123456'),
-                   )
+    usr_infos={"default_name":UsrInfo('127.0.0.1',22,'root','123456')}
     data={}
+
+    def SetUsrInfos(connects):
+        for connect_info in connects.items():
+            RemoteToolMgr.usr_infos[connect_info[0]]=UsrInfo(connect_info[1][0],connect_info[1][1],connect_info[1][2],connect_info[1][3])
+
     def CreateRemoteTool(ip,port,usr,password):
         RemoteToolMgr.usr_infos[ip]=UsrInfo(ip,port,usr,password)
         return RemoteToolMgr.GetDefaultUsr(ip)
 
-    def TarSftpGetGZ(self,src,des):
-        self.ssh_cmd.Exec_Commend( "cd "+os.path.dirname(src)+" && tar -czf "+ os.path.basename(src)+".tz " + os.path.basename(src))
-        self.sftp.SftpGet(src+".tz",des+".tz")
-        old_cwd=os.getcwd()
-        if os.path.dirname(des):
-            os.chdir(os.path.dirname(des))
-        os.system("tar -xzf " +os.path.basename(des) +".tz && rm -f "+os.path.basename(des)+".tz")
-        self.ssh_cmd.Exec_Commend( "rm -f " +src+".tz")
-        os.chdir(old_cwd)
-
-    def GetDefaultUsr(usr_name):
+    def GetDefaultUsr(usr_name="default_name"):
         usr_info=RemoteToolMgr.usr_infos.get(usr_name)
         if not usr_info:
             print('%s is not default user'%usr_name)
@@ -115,69 +115,3 @@ class RemoteToolMgr:
         remote_tool=RemoteTool(sftp,ssh_cmd,)
         RemoteToolMgr.data[usr_name]=remote_tool
         return remote_tool
-
-loc_debug_dir=out+'/build/Linux-GCC-Debug/'+project_name+'/Debug'
-loc_bin_dir=loc_debug_dir+'/bin'
-loc_his_bin_dir=loc_debug_dir+'/his_bin'
-loc_debug_srv=loc_debug_dir+'/'+project_name
-
-loc_release_dir=out+'/build/Linux-GCC-Release/'+project_name+'/Release'
-loc_release_srv=loc_release_dir+'/'+project_name
-
-loc_bin_init_cmd='mkdir -p  '+loc_bin_dir+' && mkdir -p '+loc_his_bin_dir+ ' && mv ' +loc_bin_dir+'/* '+loc_his_bin_dir
-
-
-svr_dir='/root/project/'+project_name
-svr_files=svr_dir+'/'+project_name
-svr_bin_dir=svr_dir+'/bin'
-svr_bin_dir_his=svr_dir+'/his_bin'
-svr_log_dir=svr_dir+'/log'
-svr_log_dir_his=svr_dir+'/Log_His'
-
-svr_bin_init_cmd='mkdir -p  '+svr_bin_dir+' && mkdir -p '+svr_bin_dir_his+ ' && mv ' +svr_bin_dir+'/* '+svr_bin_dir_his
-svr_log_init_cmd='mkdir -p  '+svr_log_dir_his+' && mv ' +svr_log_dir+'/* '+svr_log_dir_his
-
-svr_batch_dir='/root/project/batch'
-svr_start_file=svr_batch_dir+'/start_'+project_name+'.sh'
-svr_stop_file=svr_batch_dir+'/stop_'+project_name+'.sh'
-svr_rm_log=svr_batch_dir+'/stop_'+project_name+'.sh'
-
-
-def get_bin_file():
-    remote=RemoteToolMgr.GetDefaultUsr(ipname)
-    sunny=RemoteToolMgr.GetDefaultUsr('sunny')
-    sunny.ssh_cmd.Exec_Commend(loc_bin_init_cmd)
-    des_files=sunny.ssh_cmd.Exec_Commend('ls '+  loc_bin_dir)
-    src_files=remote.ssh_cmd.Exec_Commend('ls '+  svr_bin_dir)
-
-    files=set(src_files[1])-set(des_files[1])
-    for x in files:
-        remote.sftp.SftpGet(svr_bin_dir+'/'+x,loc_bin_dir+'/'+x)
-    print(*files,sep='\n')
-
-def reset_server(srv_file):
-    remote=RemoteToolMgr.GetDefaultUsr(ipname)
-    res=remote.ssh_cmd.Exec_Commend(svr_bin_init_cmd)
-    print(res)
-    res=remote.ssh_cmd.Exec_Commend(svr_log_init_cmd)
-    print(res)
-    res=remote.ssh_cmd.Exec_Commend('sh '+  svr_stop_file)
-    print(res)
-    time.sleep(2)
-    remote.sftp.SftpPut(srv_file,svr_files)
-    res=remote.ssh_cmd.Exec_Commend('sh '+  svr_start_file)
-    print(res)
-
-def reset_debug_server():
-    reset_server(loc_debug_srv)
-
-def reset_release_server():
-    reset_server(loc_release_srv)
-
-def rm_server_log():
-    remote=RemoteToolMgr.GetDefaultUsr('remote')
-    res=remote.ssh_cmd.Exec_Commend('sh '+  svr_stop_file)
-    print(res)
-    remote.sftp.SftpPut(loc_debug_srv,svr_files)
-    res=remote.ssh_cmd.Exec_Commend('sh '+  svr_start_file)
-    print(res)

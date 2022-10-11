@@ -1,5 +1,7 @@
 ﻿# Python实用宝典
 # 2021/11/13
+#https://blog.csdn.net/u010751000/article/details/121313045
+import os
 import json
 import hashlib
 import base64
@@ -9,8 +11,6 @@ import time
 #from webbrowser import get
 import requests
 from urllib.parse import quote_plus
-
-from get_bin_files import *
 
 dd_token="dd_token",
 dd_secret="dd_secret"
@@ -42,5 +42,9 @@ class Messenger:
             headers=self.headers
         )
 
-#    m = Messenger(dd_token,dd_secret)
-#    m.send_text("your msg")
+if __name__=="__main__":
+    os.chdir(os.path.dirname(__file__))
+    dd_token="eae395dc6d4f44b92a49efd9f9c523660f83c15a81cc637d4976f1c3925c1677"
+    dd_secret="SEC7504d9bd28509d5fb01659c1eb2c21d0268b57e5fd98cc7eab290ac679ee3122"
+    m = Messenger(dd_token,dd_secret)
+    m.send_text("your msg")

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config exe="ClearServer" ip="192.168.222.222" username="root" password="123456" >
+	<fix_dir root_dir="~/simulatetrade"  exe_dir="ClearServer"/>
+	<copys>
+		<copy src="/home/sunny/.vs/simulatetrade/5e0353be-4a37-41f0-908d-929789c7996c/out/build/Linux-GCC-Release/ClearServer/Release/config" des="ClearServer/config"/>
+		<copy src="/home/sunny/.vs/simulatetrade/5e0353be-4a37-41f0-908d-929789c7996c/out/build/Linux-GCC-Release/ClearServer/Release/ClearServer" des="ClearServer/ClearServer"/>
+	</copys>
+</config>

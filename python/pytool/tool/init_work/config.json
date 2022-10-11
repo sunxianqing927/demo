@@ -1,0 +1,54 @@
+{
+  "use_config": "BaseServer_447",
+  "connects": {
+    "ip110_dwzq": [ "192.168.221.110", 22, "dwzq", "123456" ],
+    "ip110_root": [ "192.168.221.110", 22, "root", "Hfu25Q1g" ],
+    "ip447_dwzq": [ "10.141.44.7", 22, "dwzq", "Gsfy@20210426" ],
+    "sunny": [ "192.168.222.222", 22, "sunny", "123456" ]
+  },
+  "HQDataServer_447": {
+    "connect_name": "ip447_dwzq",
+    "project_name": "HQDataServer",
+    "svr_root": "/dataserver",
+    "work_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src",
+    "config_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/config/HQDataServer",
+    "out": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out",
+    "debug_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/HQDataServer",
+    "debug_exe": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/HQDataServer/HQDataServer",
+    "release_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/HQDataServer",
+    "release_exe": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/HQDataServer/HQDataServer",
+    "protocsvr_sh": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/common/protocol/proto/protocsvr.sh",
+    "protoc": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/depends/protobuf/bin/protoc"
+  },
+
+  "BaseServer_447": {
+    "connect_name": "ip447_dwzq",
+    "project_name": "BaseServer",
+    "svr_root": "/dataserver",
+    "work_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src",
+    "config_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/config/BaseServer",
+    "out": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out",
+    "debug_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/BaseServer",
+    "debug_exe": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/BaseServer/BaseServer",
+    "release_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/BaseServer",
+    "release_exe": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/BaseServer/BaseServer",
+    "protocsvr_sh": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/common/protocol/proto/protocsvr.sh",
+    "protoc": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/depends/protobuf/bin/protoc"
+  },
+
+  "test": {
+    "connect_name": "sunny",
+    "project_name": "HQDataServer",
+    "svr_root": "/dataserver",
+    "work_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src",
+    "config_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/config/HQDataServer",
+    "out": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out",
+    "debug_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/HQDataServer",
+    "debug_exe": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/HQDataServer/HQDataServer",
+    "release_dir": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/HQDataServer",
+    "release_exe": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/HQDataServer/HQDataServer",
+    "protocsvr_sh": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/common/protocol/proto/protocsvr.sh",
+    "protoc": "/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/depends/protobuf/bin/protoc"
+  }
+
+}

@@ -1,0 +1,14 @@
+{
+  "start": "2019",
+  "end": "2022",
+  "connects": [
+    {
+      "host": "10.141.44.7",
+      "port": 3306,
+      "database": "baseinfo",
+      "user": "root",
+      "password": "Gsfy@20210426"
+    }
+  ]
+
+}

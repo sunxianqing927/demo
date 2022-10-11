@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config exe="HQDataServer_test" ip="192.168.222.222" username="root" password="123456" >
+	<fix_dir root_dir="~/test"  exe_dir="running/HQDataServer_test"/>
+	<copys>
+		<copy src="/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/config/HQDataServer" des="running/HQDataServer_test/config"/>
+		<copy src="/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Debug/HQDataServer/HQDataServer_test" des="running/HQDataServer_test/HQDataServer_test"/>
+	</copys>
+</config>

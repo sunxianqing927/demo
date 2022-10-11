@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<config exe="search_gateway" ip="192.168.221.110" username="root" password="Hfu25Q1g" >
+	<fix_dir root_dir="~/gateway_t"  exe_dir="running/search_gateway"/>
+	<copys>
+		<copy src="/root/gateway/batch/set_env.sh" des="batch/set_env.sh"/>
+		<copy src="/root/gateway/running/search_gateway/config.xml" des="running/search_gateway/config.xml"/>
+		<copy src="/root/gateway/running/search_gateway/market.ini" des="running/search_gateway/market.ini"/>
+		<copy src="/root/gateway/running/search_gateway/log4z.cfg" des="running/search_gateway/log4z.cfg"/>
+		<copy src="/root/gateway/running/search_gateway/trade.xml" des="running/search_gateway/trade.xml"/>
+		<copy src="/root/gateway/running/search_gateway/search_gateway" des="running/search_gateway/search_gateway"/>
+	</copys>
+</config>

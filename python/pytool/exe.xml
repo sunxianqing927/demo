@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<config exe="exe_name" ip="192.168.222.222" username="root" password="123456" >
-	<fix_dir root_dir="~/root_dir"  exe_dir="exe_dir/exe_name"/>
-	<copys>
-		<copy src="/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/src/exe_name/config" des="running/exe_name/config"/>
-		<copy src="/home/sunny/.vs/basedata/b7926f82-05ad-4809-ba49-b0975b30f6c3/out/build/Linux-GCC-Release/exe_name/Release/exe_name" des="running/exe_name/exe_name"/>
-	</copys>
-</config>

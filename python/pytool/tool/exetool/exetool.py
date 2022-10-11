@@ -1,9 +1,10 @@
-﻿from get_bin_files import *
-import re
+﻿import re
 import os
 import shutil
 import sys
 from xml.etree.ElementTree import parse
+sys.path.append("..")
+from common.remote_tool import *
         
 default_lib_paths=["/lib","/usr/lib","/usr/local/lib","/usr/local"]
 
@@ -18,10 +19,11 @@ def InitProject(cfgfile):
     root =  parse(cfgfile).getroot()
     remote_tool=RemoteToolMgr.CreateRemoteTool(root.get("ip"),22,root.get("username"),root.get("password"))
     exe=root.get("exe")
-    shutil.rmtree(exe,ignore_errors=True)
-    os.makedirs(exe, exist_ok=True)
+    bin_exe="bin/"+exe
+    shutil.rmtree(bin_exe,ignore_errors=True)
+    os.makedirs(bin_exe, exist_ok=True)
     old_cwd=os.getcwd()
-    os.chdir(exe)
+    os.chdir(bin_exe)
 
     fix_dir=root.find("fix_dir")
     root_dir=fix_dir.get("root_dir")
@@ -112,9 +114,8 @@ def CreateBatchScript(src_dir,des_dir,server_root_dir,server_exe_dir,sever_name)
     os.system("chmod +x "+des_dir+"/*")
 
 if __name__ == "__main__":
-        
     os.chdir(os.path.abspath(os.path.dirname(sys.argv[0])))
-    cfg=sys.argv[1] if len(sys.argv)==2 else "exe.xml"
+    cfg=sys.argv[1] if len(sys.argv)==2 else "config/exe.xml"
     root_dir,exe_dir,exe=InitProject(cfg)
     pid=GetPid(exe)
     if not pid:
@@ -122,6 +123,6 @@ if __name__ == "__main__":
         exit(1) 
 
     remote_lib_paths=readProcMapsInfos(pid)
-    CopyRemoteToLocal(exe+"/lib",list(remote_lib_paths))
-    CreateBatchScript("batch_template",exe+"/batch",root_dir,exe_dir,exe)
+    CopyRemoteToLocal("bin/"+exe+"/lib",list(remote_lib_paths))
+    CreateBatchScript("batch_template","bin/"+exe+"/batch",root_dir,exe_dir,exe)
 
